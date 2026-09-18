@@ -686,10 +686,6 @@ screenshots/
 
 Add your home/index page screenshot here.
 
-```markdown
-![Home Page](screenshots/home.png)
-```
-
 **Screenshot:**
 
 ![Home Page](screenshots/home.png)
@@ -699,10 +695,6 @@ Add your home/index page screenshot here.
 ## 🔐 Login Page
 
 Add your login page screenshot here.
-
-```markdown
-![Login Page](screenshots/login.png)
-```
 
 **Screenshot:**
 
@@ -714,9 +706,6 @@ Add your login page screenshot here.
 
 Add your registration page screenshot here.
 
-```markdown
-![Register Page](screenshots/register.png)
-```
 
 **Screenshot:**
 
@@ -728,9 +717,6 @@ Add your registration page screenshot here.
 
 Add your main dashboard screenshot here.
 
-```markdown
-![Dashboard](screenshots/dashboard.png)
-```
 
 **Screenshot:**
 
@@ -738,75 +724,7 @@ Add your main dashboard screenshot here.
 
 ---
 
-## 📚 Books Management
 
-Add your books management screenshot here.
-
-```markdown
-![Books Management](screenshots/books.png)
-```
-
-**Screenshot:**
-
-![Books Management](screenshots/books.png)
-
----
-
-## 👥 Members Management
-
-Add your members page screenshot here.
-
-```markdown
-![Members Management](screenshots/members.png)
-```
-
-**Screenshot:**
-
-![Members Management](screenshots/members.png)
-
----
-
-## 📖 Issue Book
-
-Add your issue-book page screenshot here.
-
-```markdown
-![Issue Book](screenshots/issue-book.png)
-```
-
-**Screenshot:**
-
-![Issue Book](screenshots/issue-book.png)
-
----
-
-## 🚪 Logout Page
-
-Add your logout page screenshot here.
-
-```markdown
-![Logout Page](screenshots/logout.png)
-```
-
-**Screenshot:**
-
-![Logout Page](screenshots/logout.png)
-
----
-
-## 🗄️ Database
-
-You can also add a screenshot of your MySQL database structure.
-
-```markdown
-![Database](screenshots/database.png)
-```
-
-**Screenshot:**
-
-![Database](screenshots/database.png)
-
----
 
 # 📱 Responsive Design
 
