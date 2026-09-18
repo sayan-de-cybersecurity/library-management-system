@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Libra - Library Management System</title>
+
+    <link rel="stylesheet" href="lms.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        <span>📚</span>
+        Library
+    </div>
+
+    <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="books.html">Books</a>
+        <a href="#categories">Categories</a>
+        <a href="#about">About</a>
+    </nav>
+
+    <div class="nav-actions">
+        <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+        <a href="login.html" class="btn btn-primary">Login</a>
+        <a href="register.html" class="btn btn-primary">Register</a>
+    </div>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <span class="hero-badge">
+            ✨ Smart Library Management
+        </span>
+
+        <h1>
+            Discover.
+            <span>Read.</span>
+            Grow.
+        </h1>
+
+        <p>
+            Manage books, members, borrowing and library activities
+            from one simple and modern platform.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#books" class="btn btn-primary">
+                Explore Books →
+            </a>
+
+            <a href="login.html" class="btn btn-outline">
+                View Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-card">
+
+        <div class="book-icon">
+            📖
+        </div>
+
+        <h3>Today's Library</h3>
+
+        <div class="hero-stat">
+            <strong>12,540</strong>
+            <span>Books Available</span>
+        </div>
+
+        <div class="hero-stat">
+            <strong>2,840</strong>
+            <span>Active Members</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATS ================= -->
+
+<section class="stats-section">
+
+    <div class="stat-card">
+        <div class="stat-icon">📚</div>
+        <div>
+            <h3>12,540</h3>
+            <p>Total Books</p>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div>
+            <h3>2,840</h3>
+            <p>Members</p>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">📤</div>
+        <div>
+            <h3>1,240</h3>
+            <p>Books Issued</p>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div>
+            <h3>128</h3>
+            <p>Due Today</p>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- ================= BOOK SEARCH ================= -->
+
+<section class="section" id="books">
+
+    <div class="section-header">
+
+        <div>
+            <span class="section-label">LIBRARY COLLECTION</span>
+
+            <h2>Find your next book</h2>
+
+            <p>
+                Search through our collection of books.
+            </p>
+        </div>
+
+        <a href="books.html" class="view-all">
+            View All Books →
+        </a>
+
+    </div>
+
+
+    <div class="search-container">
+
+        <div class="search-box">
+
+            <span>🔍</span>
+
+            <input
+                type="text"
+                id="bookSearch"
+                placeholder="Search books, authors or ISBN..."
+                onkeyup="searchBooks()"
+            >
+
+        </div>
+
+        <select id="categoryFilter" onchange="filterBooks()">
+
+            <option value="all">All Categories</option>
+            <option value="programming">Programming</option>
+            <option value="ai">Artificial Intelligence</option>
+            <option value="security">Cyber Security</option>
+            <option value="database">Database</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="books-grid" id="booksGrid">
+
+        <div class="book-card" data-category="programming">
+
+            <div class="book-cover blue">
+                <span>CODE</span>
+            </div>
+
+            <div class="book-info">
+
+                <span class="book-category">
+                    Programming
+                </span>
+
+                <h3>Clean Code</h3>
+
+                <p>Robert C. Martin</p>
+
+                <div class="book-footer">
+
+                    <span class="available">
+                        ● Available
+                    </span>
+
+                    <button onclick="showBook('Clean Code')">
+                        Details
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="book-card" data-category="ai">
+
+            <div class="book-cover purple">
+                <span>AI</span>
+            </div>
+
+            <div class="book-info">
+
+                <span class="book-category">
+                    Artificial Intelligence
+                </span>
+
+                <h3>Artificial Intelligence</h3>
+
+                <p>Stuart Russell</p>
+
+                <div class="book-footer">
+
+                    <span class="available">
+                        ● Available
+                    </span>
+
+                    <button onclick="showBook('Artificial Intelligence')">
+                        Details
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="book-card" data-category="security">
+
+            <div class="book-cover dark">
+                <span>CYBER</span>
+            </div>
+
+            <div class="book-info">
+
+                <span class="book-category">
+                    Cyber Security
+                </span>
+
+                <h3>Cyber Security Basics</h3>
+
+                <p>Joseph Steinberg</p>
+
+                <div class="book-footer">
+
+                    <span class="available">
+                        ● Available
+                    </span>
+
+                    <button onclick="showBook('Cyber Security Basics')">
+                        Details
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="book-card" data-category="database">
+
+            <div class="book-cover orange">
+                <span>SQL</span>
+            </div>
+
+            <div class="book-info">
+
+                <span class="book-category">
+                    Database
+                </span>
+
+                <h3>Database System Concepts</h3>
+
+                <p>Abraham Silberschatz</p>
+
+                <div class="book-footer">
+
+                    <span class="available">
+                        ● Available
+                    </span>
+
+                    <button onclick="showBook('Database System Concepts')">
+                        Details
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<section class="section categories-section" id="categories">
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-label">
+                CATEGORIES
+            </span>
+
+            <h2>Explore by category</h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        <div class="category-card">
+            <span>💻</span>
+            <h3>Programming</h3>
+            <p>1,250 Books</p>
+        </div>
+
+        <div class="category-card">
+            <span>🤖</span>
+            <h3>Artificial Intelligence</h3>
+            <p>840 Books</p>
+        </div>
+
+        <div class="category-card">
+            <span>🔐</span>
+            <h3>Cyber Security</h3>
+            <p>620 Books</p>
+        </div>
+
+        <div class="category-card">
+            <span>🗄️</span>
+            <h3>Database</h3>
+            <p>540 Books</p>
+        </div>
+
+        <div class="category-card">
+            <span>🌐</span>
+            <h3>Networking</h3>
+            <p>480 Books</p>
+        </div>
+
+        <div class="category-card">
+            <span>📐</span>
+            <h3>Mathematics</h3>
+            <p>720 Books</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta">
+
+    <div>
+
+        <h2>Ready to manage your library?</h2>
+
+        <p>
+            Access your dashboard and manage everything from one place.
+        </p>
+
+    </div>
+
+    <a href="login.html" class="btn btn-light">
+        Open Dashboard →
+    </a>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="footer-logo">
+        📚 Libra
+    </div>
+
+    <p>
+        Modern Library Management System
+    </p>
+
+    <div class="footer-bottom">
+        © 2026 Libra Library. All rights reserved.
+    </div>
+
+</footer>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal" id="bookModal">
+
+    <div class="modal-content">
+
+        <button class="modal-close" onclick="closeModal()">
+            ×
+        </button>
+
+        <div class="modal-icon">
+            📖
+        </div>
+
+        <h2 id="modalBookName">
+            Book
+        </h2>
+
+        <p>
+            This book is currently available in the library.
+        </p>
+
+        <button class="btn btn-primary" onclick="closeModal()">
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="lms.js"></script>
+
+</body>
+</html>

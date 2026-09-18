@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LibraHub - Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        :root {
+            --primary: #667eea;
+            --primary-dark: #4f5fd1;
+            --sidebar: #111827;
+            --sidebar-hover: #1f2937;
+            --bg: #f4f6fb;
+            --white: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ==============================
+           LAYOUT
+        ============================== */
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ==============================
+           SIDEBAR
+        ============================== */
+
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar);
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 1000;
+            transition: 0.3s;
+        }
+
+        .brand {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            padding: 0 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+            margin-right: 11px;
+        }
+
+        .brand h2 {
+            font-size: 20px;
+            letter-spacing: 0.3px;
+        }
+
+        .brand span {
+            color: #a5b4fc;
+        }
+
+        .menu {
+            padding: 20px 12px;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #6b7280;
+            padding: 0 12px 10px;
+            letter-spacing: 1px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 12px 14px;
+            color: #d1d5db;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: var(--sidebar-hover);
+            color: white;
+        }
+
+        .menu a.active {
+            background: var(--primary);
+        }
+
+        .menu-icon {
+            width: 22px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-bottom {
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            bottom: 20px;
+        }
+
+        .logout-menu {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 15px;
+        }
+
+        .logout-menu button {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #fca5a5;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 12px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-menu button:hover {
+            background: #3f1d1d;
+        }
+
+        /* ==============================
+           MAIN
+        ============================== */
+
+        .main {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            min-height: 100vh;
+        }
+
+        /* ==============================
+           TOPBAR
+        ============================== */
+
+        .topbar {
+            height: 75px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            position: sticky;
+            top: 0;
+            z-index: 500;
+        }
+
+        .mobile-menu {
+            display: none;
+            border: none;
+            background: none;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .page-title h1 {
+            font-size: 21px;
+        }
+
+        .page-title p {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        .top-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .notification {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            font-size: 18px;
+        }
+
+        .notification-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            position: absolute;
+            top: 7px;
+            right: 8px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .user-short {
+            line-height: 1.2;
+        }
+
+        .user-short strong {
+            font-size: 14px;
+        }
+
+        .user-short small {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* ==============================
+           CONTENT
+        ============================== */
+
+        .content {
+            padding: 30px;
+        }
+
+        .welcome {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 28px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .welcome h2 {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .welcome-icon {
+            font-size: 70px;
+            opacity: 0.18;
+        }
+
+        /* ==============================
+           STAT CARDS
+        ============================== */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .books-icon {
+            background: #eef2ff;
+        }
+
+        .issued-icon {
+            background: #ecfdf5;
+        }
+
+        .due-icon {
+            background: #fff7ed;
+        }
+
+        .member-icon {
+            background: #eff6ff;
+        }
+
+        .stat-card h3 {
+            font-size: 24px;
+            margin-bottom: 3px;
+        }
+
+        .stat-card p {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        /* ==============================
+           GRID
+        ============================== */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .card-header h3 {
+            font-size: 17px;
+        }
+
+        .view-all {
+            border: none;
+            background: none;
+            color: var(--primary);
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* ==============================
+           SEARCH
+        ============================== */
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+        }
+
+        .search-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 0 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .search-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* ==============================
+           BOOK TABLE
+        ============================== */
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            font-size: 12px;
+            color: var(--muted);
+            background: #f9fafb;
+            padding: 12px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 13px 12px;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        .book-name {
+            font-weight: 600;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .available {
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .issued {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* ==============================
+           QUICK ACTIONS
+        ============================== */
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .quick-action {
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 15px;
+            text-align: center;
+            background: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .quick-action:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .quick-action div {
+            font-size: 23px;
+            margin-bottom: 7px;
+        }
+
+        .quick-action span {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ==============================
+           PROFILE
+        ============================== */
+
+        .profile-row {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 15px;
+        }
+
+        .profile-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+            font-weight: bold;
+        }
+
+        .profile-info strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .profile-info span {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 13px;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--muted);
+        }
+
+        /* ==============================
+           NOTIFICATIONS
+        ============================== */
+
+        .notification-item {
+            display: flex;
+            gap: 11px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eef2ff;
+        }
+
+        .notification-item strong {
+            font-size: 12px;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .notification-item p {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* ==============================
+           SECTIONS
+        ============================== */
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .empty-state {
+            padding: 35px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .empty-state div {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        /* ==============================
+           LOADING
+        ============================== */
+
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ==============================
+           MOBILE
+        ============================== */
+
+        @media (max-width: 1000px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .content {
+                padding: 18px;
+            }
+
+            .user-short {
+                display: none;
+            }
+
+            .welcome {
+                padding: 22px;
+            }
+
+            .welcome-icon {
+                display: none;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .page-title p {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ==============================
+     LOADING / SESSION CHECK
+============================== -->
+
+<div class="loading-screen" id="loadingScreen">
+    <div class="spinner"></div>
+    <p>Checking your session...</p>
+</div>
+
+
+<div class="app">
+
+    <!-- ==============================
+         SIDEBAR
+    ============================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">📚</div>
+            <h2>Libra<span>Hub</span></h2>
+        </div>
+
+        <div class="menu">
+
+            <div class="menu-title">Main Menu</div>
+
+            <a class="active" onclick="showSection('dashboard', this)">
+                <span class="menu-icon">🏠</span>
+                Dashboard
+            </a>
+
+            <a onclick="showSection('books', this)">
+                <span class="menu-icon">📚</span>
+                Books
+            </a>
+
+            <a onclick="showSection('issued', this)">
+                <span class="menu-icon">📖</span>
+                My Issued Books
+            </a>
+
+            <a onclick="showSection('members', this)">
+                <span class="menu-icon">👥</span>
+                Members
+            </a>
+
+            <a onclick="showSection('notifications', this)">
+                <span class="menu-icon">🔔</span>
+                Notifications
+            </a>
+
+            <div class="menu-title" style="margin-top:25px;">
+                Account
+            </div>
+
+            <a onclick="showSection('profile', this)">
+                <span class="menu-icon">👤</span>
+                My Profile
+            </a>
+
+        </div>
+
+        <div class="sidebar-bottom">
+
+            <div class="logout-menu">
+                <button onclick="logoutUser()">
+                    <span class="menu-icon">🚪</span>
+                    Logout
+                </button>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ==============================
+         MAIN
+    ============================== -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <button class="mobile-menu" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="page-title">
+                <h1 id="pageTitle">Dashboard</h1>
+                <p>Library Management System</p>
+            </div>
+
+            <div class="top-user">
+
+                <div class="notification">
+                    🔔
+                    <span class="notification-dot"></span>
+                </div>
+
+                <div class="avatar" id="topAvatar">
+                    U
+                </div>
+
+                <div class="user-short">
+                    <strong id="topUserName">User</strong>
+                    <small id="topUserERP">ERP ID</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <div class="content">
+
+
+            <!-- ==============================
+                 DASHBOARD SECTION
+            ============================== -->
+
+            <section id="dashboard" class="section active">
+
+                <div class="welcome">
+
+                    <div>
+                        <h2>
+                            Welcome, <span id="welcomeName">Student</span> 👋
+                        </h2>
+
+                        <p>
+                            Manage your books, issues and library activities from one place.
+                        </p>
+                    </div>
+
+                    <div class="welcome-icon">
+                        📚
+                    </div>
+
+                </div>
+
+
+                <!-- STATISTICS -->
+
+                <div class="stats">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon books-icon">
+                            📚
+                        </div>
+
+                        <div>
+                            <h3 id="totalBooks">0</h3>
+                            <p>Total Books</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon issued-icon">
+                            📖
+                        </div>
+
+                        <div>
+                            <h3 id="myIssuedBooks">0</h3>
+                            <p>My Issued Books</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon due-icon">
+                            ⏰
+                        </div>
+
+                        <div>
+                            <h3 id="dueBooks">0</h3>
+                            <p>Due / Overdue</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon member-icon">
+                            👥
+                        </div>
+
+                        <div>
+                            <h3 id="totalMembers">0</h3>
+                            <p>Total Members</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <!-- LEFT -->
+
+                    <div>
+
+                        <!-- SEARCH -->
+
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h3>Search Library</h3>
+                            </div>
+
+                            <div class="search-box">
+
+                                <input
+                                    type="text"
+                                    id="bookSearch"
+                                    placeholder="Search by book title, author or ISBN..."
+                                >
+
+                                <button
+                                    class="search-btn"
+                                    onclick="searchBooks()"
+                                >
+                                    Search
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- RECENT BOOKS -->
+
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h3>Library Books</h3>
+
+                                <button
+                                    class="view-all"
+                                    onclick="showSection('books')"
+                                >
+                                    View All
+                                </button>
+                            </div>
+
+                            <div class="table-wrapper">
+
+                                <table>
+
+                                    <thead>
+
+                                        <tr>
+                                            <th>Book</th>
+                                            <th>Author</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody id="booksTable">
+
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="empty-state">
+                                                    <div>📚</div>
+                                                    Loading books...
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RIGHT -->
+
+                    <div>
+
+                        <!-- PROFILE CARD -->
+
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h3>My Profile</h3>
+
+                                <button
+                                    class="view-all"
+                                    onclick="showSection('profile')"
+                                >
+                                    View
+                                </button>
+                            </div>
+
+                            <div class="profile-row">
+
+                                <div class="profile-avatar" id="profileAvatar">
+                                    U
+                                </div>
+
+                                <div class="profile-info">
+
+                                    <strong id="profileName">
+                                        Student
+                                    </strong>
+
+                                    <span id="profileEmail">
+                                        email@example.com
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="info-item">
+                                <span class="info-label">ERP ID</span>
+                                <strong id="profileERP">-</strong>
+                            </div>
+
+                            <div class="info-item">
+                                <span class="info-label">Role</span>
+                                <strong id="profileRole">Student</strong>
+                            </div>
+
+                        </div>
+
+
+                        <!-- QUICK ACTIONS -->
+
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h3>Quick Actions</h3>
+                            </div>
+
+                            <div class="quick-actions">
+
+                                <div
+                                    class="quick-action"
+                                    onclick="showSection('books')"
+                                >
+                                    <div>📚</div>
+                                    <span>Browse Books</span>
+                                </div>
+
+                                <div
+                                    class="quick-action"
+                                    onclick="showSection('issued')"
+                                >
+                                    <div>📖</div>
+                                    <span>My Books</span>
+                                </div>
+
+                                <div
+                                    class="quick-action"
+                                    onclick="showSection('profile')"
+                                >
+                                    <div>👤</div>
+                                    <span>Profile</span>
+                                </div>
+
+                                <div
+                                    class="quick-action"
+                                    onclick="logoutUser()"
+                                >
+                                    <div>🚪</div>
+                                    <span>Logout</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- NOTIFICATIONS -->
+
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h3>Notifications</h3>
+
+                                <button
+                                    class="view-all"
+                                    onclick="showSection('notifications')"
+                                >
+                                    View All
+                                </button>
+                            </div>
+
+                            <div id="notificationPreview">
+
+                                <div class="notification-item">
+
+                                    <div class="notification-icon">
+                                        🔔
+                                    </div>
+
+                                    <div>
+                                        <strong>Welcome to LibraHub</strong>
+
+                                        <p>
+                                            Your library dashboard is ready.
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <div class="notification-item">
+
+                                    <div class="notification-icon">
+                                        📚
+                                    </div>
+
+                                    <div>
+                                        <strong>Library Services</strong>
+
+                                        <p>
+                                            Search and manage your library books here.
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================
+                 BOOKS SECTION
+            ============================== -->
+
+            <section id="books" class="section">
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3>📚 Library Books</h3>
+                    </div>
+
+                    <div class="search-box">
+
+                        <input
+                            type="text"
+                            id="allBookSearch"
+                            placeholder="Search books..."
+                            onkeyup="filterBookTable()"
+                        >
+
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Book</th>
+                                    <th>Author</th>
+                                    <th>Category</th>
+                                    <th>ISBN</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="allBooksTable">
+
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="empty-state">
+                                            <div>📚</div>
+                                            Loading books...
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================
+                 ISSUED BOOKS
+            ============================== -->
+
+            <section id="issued" class="section">
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3>📖 My Issued Books</h3>
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Book</th>
+                                    <th>Issue Date</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="issuedBooksTable">
+
+                                <tr>
+                                    <td colspan="4">
+
+                                        <div class="empty-state">
+                                            <div>📖</div>
+                                            No issued books found.
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================
+                 MEMBERS
+            ============================== -->
+
+            <section id="members" class="section">
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3>👥 Library Members</h3>
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>ERP ID</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="membersTable">
+
+                                <tr>
+                                    <td colspan="5">
+
+                                        <div class="empty-state">
+                                            <div>👥</div>
+                                            Loading members...
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================
+                 NOTIFICATIONS
+            ============================== -->
+
+            <section id="notifications" class="section">
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3>🔔 Notifications</h3>
+                    </div>
+
+                    <div class="notification-item">
+
+                        <div class="notification-icon">
+                            📚
+                        </div>
+
+                        <div>
+                            <strong>Welcome to LibraHub</strong>
+                            <p>
+                                You have successfully logged into your library account.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="notification-item">
+
+                        <div class="notification-icon">
+                            🔐
+                        </div>
+
+                        <div>
+                            <strong>Secure Session</strong>
+                            <p>
+                                Your dashboard is protected by a Flask server-side session.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ==============================
+                 PROFILE
+            ============================== -->
+
+            <section id="profile" class="section">
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3>👤 My Profile</h3>
+                    </div>
+
+                    <div class="profile-row">
+
+                        <div class="profile-avatar" id="largeAvatar">
+                            U
+                        </div>
+
+                        <div class="profile-info">
+
+                            <strong id="largeProfileName">
+                                Student
+                            </strong>
+
+                            <span id="largeProfileEmail">
+                                -
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                    <div class="info-item">
+                        <span class="info-label">Student Name</span>
+                        <strong id="detailName">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">ERP ID</span>
+                        <strong id="detailERP">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <strong id="detailEmail">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">Phone</span>
+                        <strong id="detailPhone">-</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label">Role</span>
+                        <strong id="detailRole">Student</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       SESSION
+    ===================================================== */
+
+    let currentUser = null;
+
+
+    async function checkSession() {
+
+        try {
+
+            const response = await fetch("/api/auth/me", {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
+
+
+            if (!response.ok) {
+
+                window.location.replace("/login.html");
+
+                return;
+            }
+
+
+            const data = await response.json();
+
+
+            if (!data.success || !data.user) {
+
+                window.location.replace("/login.html");
+
+                return;
+            }
+
+
+            currentUser = data.user;
+
+            loadUserData(currentUser);
+
+            document.getElementById("loadingScreen").style.display = "none";
+
+            loadLibraryData();
+
+        }
+
+        catch (error) {
+
+            console.error("Session error:", error);
+
+            window.location.replace("/login.html");
+
+        }
+
+    }
+
+
+    /* =====================================================
+       USER DATA
+    ===================================================== */
+
+    function loadUserData(user) {
+
+        const name = user.student_name || "Student";
+
+        const email = user.student_email || "-";
+
+        const erp = user.erp_id || "-";
+
+        const role = user.role || "student";
+
+        const phone = user.phone_number || "-";
+
+
+        document.getElementById("welcomeName").textContent = name;
+
+        document.getElementById("topUserName").textContent = name;
+
+        document.getElementById("topUserERP").textContent = erp;
+
+
+        document.getElementById("profileName").textContent = name;
+
+        document.getElementById("profileEmail").textContent = email;
+
+        document.getElementById("profileERP").textContent = erp;
+
+        document.getElementById("profileRole").textContent = formatRole(role);
+
+
+        document.getElementById("detailName").textContent = name;
+
+        document.getElementById("detailERP").textContent = erp;
+
+        document.getElementById("detailEmail").textContent = email;
+
+        document.getElementById("detailPhone").textContent = phone;
+
+        document.getElementById("detailRole").textContent = formatRole(role);
+
+
+        document.getElementById("largeProfileName").textContent = name;
+
+        document.getElementById("largeProfileEmail").textContent = email;
+
+
+        const initial = name.charAt(0).toUpperCase();
+
+
+        document.getElementById("topAvatar").textContent = initial;
+
+        document.getElementById("profileAvatar").textContent = initial;
+
+        document.getElementById("largeAvatar").textContent = initial;
+
+    }
+
+
+    function formatRole(role) {
+
+        if (!role) {
+            return "Student";
+        }
+
+        return role.charAt(0).toUpperCase() + role.slice(1);
+
+    }
+
+
+    /* =====================================================
+       LIBRARY DATA
+    ===================================================== */
+
+    async function loadLibraryData() {
+
+        loadBooks();
+
+        loadMembers();
+
+        loadIssuedBooks();
+
+    }
+
+
+    /* =====================================================
+       BOOKS
+    ===================================================== */
+
+    async function loadBooks() {
+
+        try {
+
+            const response = await fetch("/api/books", {
+                credentials: "include"
+            });
+
+
+            if (!response.ok) {
+                throw new Error("Books API unavailable");
+            }
+
+
+            const data = await response.json();
+
+
+            let books = [];
+
+
+            if (Array.isArray(data)) {
+
+                books = data;
+
+            }
+            else if (Array.isArray(data.books)) {
+
+                books = data.books;
+
+            }
+            else if (Array.isArray(data.data)) {
+
+                books = data.data;
+
+            }
+
+
+            renderBooks(books);
+
+            document.getElementById("totalBooks").textContent = books.length;
+
+        }
+
+        catch (error) {
+
+            console.log("Books could not be loaded:", error);
+
+            document.getElementById("booksTable").innerHTML = `
+                <tr>
+                    <td colspan="4">
+                        <div class="empty-state">
+                            <div>📚</div>
+                            Books API is not available yet.
+                        </div>
+                    </td>
+                </tr>
+            `;
+
+            document.getElementById("allBooksTable").innerHTML = `
+                <tr>
+                    <td colspan="6">
+                        <div class="empty-state">
+                            <div>📚</div>
+                            Books API is not available yet.
+                        </div>
+                    </td>
+                </tr>
+            `;
+
+        }
+
+    }
+
+
+    function renderBooks(books) {
+
+        if (!books.length) {
+
+            document.getElementById("booksTable").innerHTML = `
+                <tr>
+                    <td colspan="4">
+                        <div class="empty-state">
+                            <div>📚</div>
+                            No books found.
+                        </div>
+                    </td>
+                </tr>
+            `;
+
+            document.getElementById("allBooksTable").innerHTML = `
+                <tr>
+                    <td colspan="6">
+                        <div class="empty-state">
+                            <div>📚</div>
+                            No books found.
+                        </div>
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        let dashboardHTML = "";
+
+        let allBooksHTML = "";
+
+
+        books.slice(0, 8).forEach(book => {
+
+            const title =
+                book.title ||
+                book.book_title ||
+                "Unknown Book";
+
+            const author =
+                book.author ||
+                book.author_name ||
+                "-";
+
+            const category =
+                book.category ||
+                "-";
+
+            const status =
+                book.status ||
+                (book.available_quantity > 0 ? "Available" : "Issued");
+
+
+            const statusClass =
+                status.toLowerCase().includes("available")
+                    ? "available"
+                    : "issued";
+
+
+            dashboardHTML += `
+                <tr>
+
+                    <td class="book-name">
+                        ${escapeHTML(title)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(author)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(category)}
+                    </td>
+
+                    <td>
+                        <span class="status ${statusClass}">
+                            ${escapeHTML(status)}
+                        </span>
+                    </td>
+
+                </tr>
+            `;
+
+        });
+
+
+        books.forEach(book => {
+
+            const id = book.id || "-";
+
+            const title =
+                book.title ||
+                book.book_title ||
+                "Unknown Book";
+
+            const author =
+                book.author ||
+                book.author_name ||
+                "-";
+
+            const category =
+                book.category ||
+                "-";
+
+            const isbn =
+                book.isbn ||
+                "-";
+
+            const status =
+                book.status ||
+                (book.available_quantity > 0 ? "Available" : "Issued");
+
+
+            const statusClass =
+                status.toLowerCase().includes("available")
+                    ? "available"
+                    : "issued";
+
+
+            allBooksHTML += `
+                <tr>
+
+                    <td>${escapeHTML(String(id))}</td>
+
+                    <td class="book-name">
+                        ${escapeHTML(title)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(author)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(category)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(String(isbn))}
+                    </td>
+
+                    <td>
+                        <span class="status ${statusClass}">
+                            ${escapeHTML(status)}
+                        </span>
+                    </td>
+
+                </tr>
+            `;
+
+        });
+
+
+        document.getElementById("booksTable").innerHTML =
+            dashboardHTML;
+
+        document.getElementById("allBooksTable").innerHTML =
+            allBooksHTML;
+
+    }
+
+
+    /* =====================================================
+       MEMBERS
+    ===================================================== */
+
+    async function loadMembers() {
+
+        try {
+
+            const response = await fetch("/api/members", {
+                credentials: "include"
+            });
+
+
+            if (!response.ok) {
+                throw new Error("Members API unavailable");
+            }
+
+
+            const data = await response.json();
+
+
+            let members = [];
+
+
+            if (Array.isArray(data)) {
+
+                members = data;
+
+            }
+            else if (Array.isArray(data.members)) {
+
+                members = data.members;
+
+            }
+            else if (Array.isArray(data.data)) {
+
+                members = data.data;
+
+            }
+
+
+            document.getElementById("totalMembers").textContent =
+                members.length;
+
+
+            if (!members.length) {
+
+                document.getElementById("membersTable").innerHTML = `
+                    <tr>
+                        <td colspan="5">
+                            <div class="empty-state">
+                                <div>👥</div>
+                                No members found.
+                            </div>
+                        </td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+
+            let html = "";
+
+
+            members.forEach(member => {
+
+                html += `
+                    <tr>
+
+                        <td>
+                            ${escapeHTML(String(member.id || "-"))}
+                        </td>
+
+                        <td class="book-name">
+                            ${escapeHTML(
+                                member.student_name ||
+                                member.name ||
+                                "-"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                member.erp_id ||
+                                "-"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                member.student_email ||
+                                member.email ||
+                                "-"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                formatRole(member.role)
+                            )}
+                        </td>
+
+                    </tr>
+                `;
+
+            });
+
+
+            document.getElementById("membersTable").innerHTML =
+                html;
+
+        }
+
+        catch (error) {
+
+            console.log("Members could not be loaded:", error);
+
+            document.getElementById("membersTable").innerHTML = `
+                <tr>
+                    <td colspan="5">
+                        <div class="empty-state">
+                            <div>👥</div>
+                            Members API is not available yet.
+                        </div>
+                    </td>
+                </tr>
+            `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ISSUED BOOKS
+    ===================================================== */
+
+    async function loadIssuedBooks() {
+
+        try {
+
+            const response = await fetch("/api/issues", {
+                credentials: "include"
+            });
+
+
+            if (!response.ok) {
+                throw new Error("Issues API unavailable");
+            }
+
+
+            const data = await response.json();
+
+
+            let issues = [];
+
+
+            if (Array.isArray(data)) {
+
+                issues = data;
+
+            }
+            else if (Array.isArray(data.issues)) {
+
+                issues = data.issues;
+
+            }
+            else if (Array.isArray(data.data)) {
+
+                issues = data.data;
+
+            }
+
+
+            /*
+                If your issues API later returns all issues,
+                filter them here using the logged-in user's ID.
+            */
+
+            if (currentUser && currentUser.id) {
+
+                const userIssues = issues.filter(issue => {
+
+                    const userId =
+                        issue.user_id ||
+                        issue.member_id ||
+                        issue.student_id;
+
+                    if (!userId) {
+                        return true;
+                    }
+
+                    return String(userId) ===
+                           String(currentUser.id);
+
+                });
+
+                issues = userIssues;
+
+            }
+
+
+            document.getElementById("myIssuedBooks").textContent =
+                issues.length;
+
+
+            let dueCount = 0;
+
+            let html = "";
+
+
+            issues.forEach(issue => {
+
+                const title =
+                    issue.book_title ||
+                    issue.title ||
+                    issue.book_name ||
+                    "Unknown Book";
+
+                const issueDate =
+                    issue.issue_date ||
+                    issue.issued_at ||
+                    "-";
+
+                const dueDate =
+                    issue.due_date ||
+                    issue.return_date ||
+                    "-";
+
+                const status =
+                    issue.status ||
+                    "Issued";
+
+
+                if (
+                    String(status).toLowerCase().includes("due") ||
+                    String(status).toLowerCase().includes("overdue")
+                ) {
+
+                    dueCount++;
+
+                }
+
+
+                html += `
+                    <tr>
+
+                        <td class="book-name">
+                            ${escapeHTML(title)}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(String(issueDate))}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(String(dueDate))}
+                        </td>
+
+                        <td>
+                            <span class="status pending">
+                                ${escapeHTML(String(status))}
+                            </span>
+                        </td>
+
+                    </tr>
+                `;
+
+            });
+
+
+            if (!html) {
+
+                html = `
+                    <tr>
+                        <td colspan="4">
+
+                            <div class="empty-state">
+                                <div>📖</div>
+                                You have no issued books.
+                            </div>
+
+                        </td>
+                    </tr>
+                `;
+
+            }
+
+
+            document.getElementById("issuedBooksTable").innerHTML =
+                html;
+
+            document.getElementById("dueBooks").textContent =
+                dueCount;
+
+        }
+
+        catch (error) {
+
+            console.log("Issues could not be loaded:", error);
+
+            document.getElementById("issuedBooksTable").innerHTML = `
+                <tr>
+                    <td colspan="4">
+
+                        <div class="empty-state">
+                            <div>📖</div>
+                            No issued books found.
+                        </div>
+
+                    </td>
+                </tr>
+            `;
+
+            document.getElementById("myIssuedBooks").textContent = "0";
+
+            document.getElementById("dueBooks").textContent = "0";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SEARCH
+    ===================================================== */
+
+    function searchBooks() {
+
+        const query =
+            document.getElementById("bookSearch")
+                .value
+                .toLowerCase()
+                .trim();
+
+
+        const rows =
+            document.querySelectorAll("#booksTable tr");
+
+
+        rows.forEach(row => {
+
+            const text =
+                row.textContent.toLowerCase();
+
+            row.style.display =
+                text.includes(query)
+                    ? ""
+                    : "none";
+
+        });
+
+    }
+
+
+    function filterBookTable() {
+
+        const query =
+            document.getElementById("allBookSearch")
+                .value
+                .toLowerCase()
+                .trim();
+
+
+        const rows =
+            document.querySelectorAll("#allBooksTable tr");
+
+
+        rows.forEach(row => {
+
+            const text =
+                row.textContent.toLowerCase();
+
+            row.style.display =
+                text.includes(query)
+                    ? ""
+                    : "none";
+
+        });
+
+    }
+
+
+    /* =====================================================
+       SECTION NAVIGATION
+    ===================================================== */
+
+    function showSection(sectionId, clickedElement) {
+
+        document.querySelectorAll(".section")
+            .forEach(section => {
+                section.classList.remove("active");
+            });
+
+
+        const section =
+            document.getElementById(sectionId);
+
+
+        if (section) {
+            section.classList.add("active");
+        }
+
+
+        document.querySelectorAll(".menu a")
+            .forEach(link => {
+                link.classList.remove("active");
+            });
+
+
+        if (clickedElement) {
+            clickedElement.classList.add("active");
+        }
+
+
+        const titles = {
+
+            dashboard: "Dashboard",
+
+            books: "Library Books",
+
+            issued: "My Issued Books",
+
+            members: "Library Members",
+
+            notifications: "Notifications",
+
+            profile: "My Profile"
+
+        };
+
+
+        document.getElementById("pageTitle").textContent =
+            titles[sectionId] || "Dashboard";
+
+
+        if (window.innerWidth <= 750) {
+
+            document.getElementById("sidebar")
+                .classList.remove("open");
+
+        }
+
+    }
+
+
+    /* =====================================================
+       MOBILE SIDEBAR
+    ===================================================== */
+
+    function toggleSidebar() {
+
+        document.getElementById("sidebar")
+            .classList.toggle("open");
+
+    }
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    async function logoutUser() {
+
+        try {
+
+            const response = await fetch(
+                "/api/auth/logout",
+                {
+                    method: "POST",
+                    credentials: "include"
+                }
+            );
+
+
+            const data = await response.json();
+
+
+            if (data.success) {
+
+                window.location.replace("/login.html");
+
+            }
+            else {
+
+                alert("Logout failed.");
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error("Logout error:", error);
+
+            window.location.replace("/login.html");
+
+        }
+
+    }
+
+
+    /* =====================================================
+       HTML SECURITY
+    ===================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =====================================================
+       START APPLICATION
+    ===================================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        checkSession
+    );
+
+</script>
+
+</body>
+</html>

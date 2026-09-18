@@ -1,0 +1,185 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Logout</title>
+
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Page Background */
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+        }
+
+        /* Logout Box */
+        .logout-box {
+            width: 90%;
+            max-width: 400px;
+
+            background: #ffffff;
+
+            padding: 40px 30px;
+
+            border-radius: 20px;
+
+            text-align: center;
+
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Logout Icon */
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        /* Heading */
+        .logout-box h1 {
+            font-size: 30px;
+            color: #333;
+
+            margin-bottom: 12px;
+        }
+
+        /* Paragraph */
+        .logout-box p {
+            font-size: 16px;
+            color: #777;
+
+            margin-bottom: 25px;
+
+            line-height: 1.5;
+        }
+
+        /* Logout Button */
+        .logout-box button {
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #667eea;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        /* Button Hover */
+        .logout-box button:hover {
+            background: #5568d8;
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Cancel Link */
+        .logout-box a {
+            display: block;
+
+            margin-top: 18px;
+
+            color: #667eea;
+
+            text-decoration: none;
+
+            font-size: 15px;
+        }
+
+        /* Cancel Hover */
+        .logout-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 500px) {
+
+            .logout-box {
+                padding: 30px 20px;
+            }
+
+            .logout-box h1 {
+                font-size: 26px;
+            }
+
+            .logout-box p {
+                font-size: 14px;
+            }
+
+            .icon {
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body onload="checkLogoutPage()">
+
+    <div class="logout-box">
+
+        <div class="icon">🚪</div>
+
+        <h1>Logout</h1>
+
+        <p>
+            Are you sure you want to logout?
+        </p>
+
+        <button onclick="confirmLogout()">
+            Yes, Logout
+        </button>
+
+        <a href="dashboard.html">
+            Cancel
+        </a>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+```
+

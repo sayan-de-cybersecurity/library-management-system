@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - LibraHub</title>
+
+    <style>
+        /* =========================================================
+   LIBRAHUB - LOGIN PAGE
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: #f5f7fb;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.login-container {
+    min-height: 100vh;
+
+    display: flex;
+}
+
+
+/* =========================================================
+   LEFT SECTION
+   ========================================================= */
+
+.login-left {
+    width: 48%;
+
+    min-height: 100vh;
+
+    padding: 45px 70px;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111827 0%,
+            #172554 55%,
+            #1e3a8a 100%
+        );
+
+    color: white;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* Decorative circles */
+
+.login-left::before {
+    content: "";
+
+    position: absolute;
+
+    width: 320px;
+    height: 320px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    top: -100px;
+    right: -100px;
+}
+
+.login-left::after {
+    content: "";
+
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    bottom: -80px;
+    left: -80px;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.brand-icon {
+    width: 45px;
+    height: 45px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    font-size: 23px;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+   ========================================================= */
+
+.left-content {
+    max-width: 520px;
+
+    margin: auto 0;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.left-content h1 {
+    font-size: 52px;
+
+    line-height: 1.15;
+
+    margin-bottom: 20px;
+
+    font-weight: 700;
+}
+
+.left-content h1 span {
+    color: #60a5fa;
+}
+
+.left-content > p {
+    max-width: 480px;
+
+    font-size: 17px;
+
+    line-height: 1.7;
+
+    color: #cbd5e1;
+
+    margin-bottom: 42px;
+}
+
+
+/* =========================================================
+   FEATURES
+   ========================================================= */
+
+.features {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 22px;
+}
+
+.feature {
+    display: flex;
+
+    align-items: center;
+
+    gap: 17px;
+}
+
+.feature > span {
+    min-width: 48px;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.1);
+
+    font-size: 22px;
+}
+
+.feature h3 {
+    font-size: 16px;
+
+    margin-bottom: 4px;
+
+    font-weight: 600;
+}
+
+.feature p {
+    color: #94a3b8;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   RIGHT SECTION
+   ========================================================= */
+
+.login-right {
+    width: 52%;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 40px;
+
+    background: #f8fafc;
+}
+
+
+/* =========================================================
+   LOGIN BOX
+   ========================================================= */
+
+.login-box {
+    width: 100%;
+
+    max-width: 470px;
+
+    padding: 44px;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 20px 60px rgba(15, 23, 42, 0.10);
+
+    border: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   FORM HEADER
+   ========================================================= */
+
+.form-header {
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+.form-header h2 {
+    color: #111827;
+
+    font-size: 30px;
+
+    margin-bottom: 8px;
+
+    font-weight: 700;
+}
+
+.form-header p {
+    color: #64748b;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.message {
+    display: none;
+
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border-radius: 9px;
+
+    margin-bottom: 20px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+.message.success {
+    display: block;
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    border: 1px solid #bbf7d0;
+}
+
+.message.error {
+    display: block;
+
+    background: #fee2e2;
+
+    color: #991b1b;
+
+    border: 1px solid #fecaca;
+}
+
+
+/* =========================================================
+   INPUT GROUP
+   ========================================================= */
+
+.input-group {
+    margin-bottom: 22px;
+}
+
+.input-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #334155;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.input-group input {
+    width: 100%;
+
+    height: 50px;
+
+    padding: 0 15px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.input-group input::placeholder {
+    color: #94a3b8;
+}
+
+.input-group input:hover {
+    border-color: #94a3b8;
+}
+
+.input-group input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+
+/* =========================================================
+   PASSWORD
+   ========================================================= */
+
+.password-wrapper {
+    width: 100%;
+
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 50px;
+}
+
+.password-toggle {
+    position: absolute;
+
+    right: 8px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 38px;
+
+    height: 38px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    border-radius: 7px;
+
+    font-size: 17px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.password-toggle:hover {
+    background: #f1f5f9;
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+   ========================================================= */
+
+.login-btn {
+    width: 100%;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.login-btn:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.22);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+}
+
+.login-btn:disabled {
+    opacity: 0.7;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   REGISTER LINK
+   ========================================================= */
+
+.register-link {
+    text-align: center;
+
+    margin-top: 25px;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+.register-link a {
+    color: #2563eb;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    margin-left: 4px;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .login-left {
+        padding: 40px;
+    }
+
+    .left-content h1 {
+        font-size: 42px;
+    }
+
+    .login-right {
+        padding: 25px;
+    }
+
+    .login-box {
+        padding: 34px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .login-container {
+        display: block;
+    }
+
+    .login-left {
+        width: 100%;
+
+        min-height: auto;
+
+        padding: 28px 25px 35px;
+    }
+
+    .left-content {
+        margin-top: 55px;
+    }
+
+    .left-content h1 {
+        font-size: 38px;
+    }
+
+    .left-content > p {
+        font-size: 15px;
+
+        margin-bottom: 28px;
+    }
+
+    .features {
+        gap: 16px;
+    }
+
+    .feature {
+        gap: 12px;
+    }
+
+    .feature > span {
+        min-width: 42px;
+
+        width: 42px;
+        height: 42px;
+
+        font-size: 18px;
+    }
+
+    .feature h3 {
+        font-size: 14px;
+    }
+
+    .feature p {
+        font-size: 12px;
+    }
+
+    .login-right {
+        width: 100%;
+
+        min-height: auto;
+
+        padding: 25px 18px;
+    }
+
+    .login-box {
+        padding: 30px 22px;
+
+        border-radius: 16px;
+    }
+
+    .form-header h2 {
+        font-size: 26px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .login-left {
+        padding: 24px 18px 30px;
+    }
+
+    .brand {
+        font-size: 22px;
+    }
+
+    .left-content h1 {
+        font-size: 32px;
+    }
+
+    .login-right {
+        padding: 18px 12px;
+    }
+
+    .login-box {
+        padding: 24px 18px;
+    }
+}
+    </style>
+
+</head>
+
+<body>
+
+    <div class="login-container">
+
+
+        <!-- =========================================
+             LEFT SIDE
+        ========================================== -->
+
+        <div class="login-left">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    📚
+                </div>
+
+                <span>
+                    LibraHub
+                </span>
+
+            </div>
+
+
+            <div class="left-content">
+
+                <h1>
+                    Welcome <span>Back!</span>
+                </h1>
+
+                <p>
+                    Login to your student account and
+                    continue exploring your digital library.
+                </p>
+
+
+                <div class="features">
+
+
+                    <div class="feature">
+
+                        <span>📚</span>
+
+                        <div>
+
+                            <h3>
+                                Access Library
+                            </h3>
+
+                            <p>
+                                Explore books and library resources.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <span>📖</span>
+
+                        <div>
+
+                            <h3>
+                                Track Your Books
+                            </h3>
+
+                            <p>
+                                View issued and returned books.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <span>🔐</span>
+
+                        <div>
+
+                            <h3>
+                                Secure Login
+                            </h3>
+
+                            <p>
+                                Your account is protected securely.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             RIGHT SIDE
+        ========================================== -->
+
+        <div class="login-right">
+
+
+            <div class="login-box">
+
+
+                <div class="form-header">
+
+                    <h2>
+                        Student Login
+                    </h2>
+
+                    <p>
+                        Login to access your LibraHub account
+                    </p>
+
+                </div>
+
+
+                <!-- =================================
+                     MESSAGE
+                ================================== -->
+
+                <div
+                    id="message"
+                    class="message"
+                ></div>
+
+
+                <!-- =================================
+                     LOGIN FORM
+                ================================== -->
+
+                <form id="loginForm">
+
+
+                    <!-- STUDENT EMAIL -->
+
+                    <div class="input-group">
+
+                        <label for="student_email">
+                            Student Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="student_email"
+                            name="student_email"
+                            placeholder="Enter your student email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="input-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword()"
+                                aria-label="Show password"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LOGIN BUTTON -->
+
+                    <button
+                        type="submit"
+                        id="loginBtn"
+                        class="login-btn"
+                    >
+                        Login
+                    </button>
+
+
+                </form>
+
+
+                <!-- =================================
+                     REGISTER
+                ================================== -->
+
+                <div class="register-link">
+
+                    Don't have an account?
+
+                    <a href="register.html">
+                        Create Account
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script>
+
+
+        const API_URL =
+            "http://127.0.0.1:5000/api/auth";
+
+
+        // ==========================================
+        // PASSWORD SHOW / HIDE
+        // ==========================================
+
+        function togglePassword() {
+
+            const password =
+                document.getElementById("password");
+
+            const button =
+                document.querySelector(".password-toggle");
+
+
+            if (password.type === "password") {
+
+                password.type = "text";
+
+                button.textContent = "🙈";
+
+            } else {
+
+                password.type = "password";
+
+                button.textContent = "👁";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // SHOW MESSAGE
+        // ==========================================
+
+        function showMessage(message, type) {
+
+            const messageBox =
+                document.getElementById("message");
+
+
+            messageBox.textContent =
+                message;
+
+
+            messageBox.className =
+                "message " + type;
+
+        }
+
+
+        // ==========================================
+        // LOGIN
+        // ==========================================
+
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", async function(event) {
+
+                event.preventDefault();
+
+
+                // ==================================
+                // GET FORM VALUES
+                // ==================================
+
+                const studentEmail =
+                    document
+                        .getElementById("student_email")
+                        .value
+                        .trim()
+                        .toLowerCase();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                // ==================================
+                // VALIDATION
+                // ==================================
+
+                if (!studentEmail) {
+
+                    showMessage(
+                        "Please enter your student email.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (!password) {
+
+                    showMessage(
+                        "Please enter your password.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                // ==================================
+                // LOGIN BUTTON
+                // ==================================
+
+                const loginBtn =
+                    document.getElementById("loginBtn");
+
+
+                loginBtn.disabled = true;
+
+                loginBtn.textContent =
+                    "Logging in...";
+
+
+                try {
+
+
+                    // ==================================
+                    // SEND LOGIN REQUEST
+                    // ==================================
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/login`,
+                            {
+
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                credentials: "include",
+
+                                body: JSON.stringify({
+
+                                    student_email:
+                                        studentEmail,
+
+                                    password:
+                                        password
+
+                                })
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    // ==================================
+                    // SUCCESS
+                    // ==================================
+
+                    if (
+                        response.ok &&
+                        data.success
+                    ) {
+
+
+                        showMessage(
+                            "Login successful! Redirecting...",
+                            "success"
+                        );
+
+
+                        // ==================================
+                        // REDIRECT TO DASHBOARD
+                        // ==================================
+
+                        setTimeout(function() {
+
+                            window.location.href =
+                                "dashboard.html";
+
+                        }, 800);
+
+                    }
+
+
+                    // ==================================
+                    // LOGIN FAILED
+                    // ==================================
+
+                    else {
+
+                        showMessage(
+                            data.message ||
+                            "Invalid student email or password.",
+                            "error"
+                        );
+
+                    }
+
+
+                }
+
+                catch (error) {
+
+
+                    console.error(
+                        "Login Error:",
+                        error
+                    );
+
+
+                    showMessage(
+                        "Unable to connect to the server. Please make sure the Flask backend is running.",
+                        "error"
+                    );
+
+                }
+
+
+                // ==================================
+                // RESET BUTTON
+                // ==================================
+
+                finally {
+
+                    loginBtn.disabled = false;
+
+                    loginBtn.textContent =
+                        "Login";
+
+                }
+
+            });
+
+
+    </script>
+
+</body>
+</html>
